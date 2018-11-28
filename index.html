@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="FR">
+
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+    <link href="style.css" rel="stylesheet" title="Simple">
+	<title>Cookie Clicker</title>
+
+</head>
+
+<body>
+
+        <button id="clic">Click</button>
+        
+        <div id="affichage"></div>
+
+        <button id="multiplier">Multiplier</button>
+
+        <button id="btnauto"> Acheter l'autoclic ! (Coût = 100)</button>
+        
+        <button id="bonus">Boost 30sec</button>
+
+    </div>
+
+<script>
+
+// Exercice Cookie clicker
+// Variables principales
+let score = 0; let multiplicateur = 1; let coutM = 10;
+let affichage = document.getElementById("affichage");
+let btn = document.getElementById("clic");
+let btn2 = document.getElementById("multiplier");
+let btnauto = document.getElementById("btnauto");
+let bonus = document.getElementById("bonus");
+
+btn2.style="display:none";
+btnauto.style="display:none";
+bonus.style="display:none";
+
+// Premier bouton "click"
+
+btn.addEventListener ("click",function(){
+score += multiplicateur;
+affichage.innerHTML=score;
+
+if (score >= 10) {
+        btn2.style="display:block";
+}
+
+if (score < 1) {
+    btn2.setAttribute('disabled');
+}
+
+if (score >= 100) {
+    btnauto.style="display:block";
+}
+// Boutons désactivé quand achat non possible
+
+if (score < coutM) {
+    btn2.disabled=true;
+    } 
+if (score >= coutM){
+    btn2.disabled=false;
+}
+});
+
+
+// deuxième bouton
+
+btn2.addEventListener("click", augmenterMultiplicateur, desactive);
+
+// fonction augmenter multip du 2eme BTN
+
+function augmenterMultiplicateur(){
+    
+multiplicateur++;
+    
+if ((score - coutM) >= 0) {
+    score -= coutM;
+    coutM = coutM * 2;
+
+    btn2.style="display:block";
+} else {
+    btn2.style="display:none";
+    }
+
+    btn2.innerHTML="Multiplicateur X " + multiplicateur + " (Coût = " + coutM + ")";
+    affichage.innerHTML=score;
+};
+
+function desactive () {
+
+};
+
+// Activation de l'autoclic a 200
+
+btnauto.addEventListener("click",function (){
+    setInterval(auto,1000)} );
+
+function auto() {
+    if (score >= 100) {
+        score++;
+        affichage.innerHTML=score;
+        document.getElementById('btnauto').disabled = true;
+    }
+};
+
+// Bonus activation /!\ Ne Fonctione PAS /!\
+
+bonus.addEventListener ("click",function(){
+    setInterval(bon,30000)} );
+
+function bon() {
+    score *= 2;
+    affichage.innerHTML=score;
+}
+
+// test fonction message
+
+function mess() {
+    alert("Vous avez aquis l'AutoClic");
+}
+
+	</script>
+
+</body>
+</html>
